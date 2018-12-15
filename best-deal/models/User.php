@@ -19,7 +19,7 @@ class User
         $this->name = $name;
         $this->surname = $surname;
         $this->email = $email;
-        $this->password = md5($password);
+        $this->password = $password;
     }
     /**
      * @return mixed

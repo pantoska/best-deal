@@ -5,6 +5,7 @@
  * Date: 15.12.18
  * Time: 14:06
  */
+require_once ('Parameters.php');
 
 class Database
 {
@@ -19,17 +20,19 @@ class Database
         $this->servername = SERVERNAME;
         $this->username = USERNAME;
         $this->password = PASSWORD;
-        $this->database = $this->username;
+        $this->database = DATABASE;
     }
 
     public function connect()
     {
         try {
-            return new PDO("mysql:host=$this->servername;dbname=$this->database", $this->username, $this->password);
+            $pdo = new PDO("mysql:host=$this->servername;dbname=$this->database", $this->username, $this->password);
+            return $pdo;
         }
         catch(PDOException $e)
         {
-            return 'Connection failed: ' . $e->getMessage();
+            echo 'Connection failed: ' . $e->getMessage();
+            exit();
         }
     }
 

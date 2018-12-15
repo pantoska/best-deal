@@ -5,6 +5,11 @@
 <body>
 <h1>HOMEPAGE</h1>
 
+<p>
+    <?= $text ?>
+</p>
+
+
 <?php
 if(isset($_SESSION) && !empty($_SESSION)) {
     print_r($_SESSION);

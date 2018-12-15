@@ -8,27 +8,29 @@
 require_once 'User.php';
 require_once __DIR__.'/../Database.php';
 
-class UserMapper
+class UserMapper extends Database
 {
-    private $database;
-
     public function __construct()
     {
-        $this->database = new Database();
+        parent::__construct();
     }
 
-    public function getUser(string $email
-    ):User {
+    public function getUser( string $email ): User {
         try {
-            $stmt = $this->database->connect()->prepare('SELECT * FROM users WHERE email = :email;');
+            $pdo = $this->connect();
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            echo $user['email'];
+
             return new User($user['name'], $user['surname'], $user['email'], $user['password']);
         }
         catch(PDOException $e) {
-            return 'Error: ' . $e->getMessage();
+            echo 'Error: ' . $e->getMessage();
+            exit();
         }
     }
 }

@@ -7,7 +7,6 @@
 
 <h1>LOGIN</h1>
 
-<!--do wyswietlania wiadomosci z bledami-->
 <?php if(isset($message)): ?>
     <?php foreach($message as $item): ?>
         <div><?= $item ?></div>

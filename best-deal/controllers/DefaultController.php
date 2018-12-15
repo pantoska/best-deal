@@ -30,10 +30,11 @@ class DefaultController extends AppController
 
         if ($this->isPost()) {
             $user = $mapper->getUser($_POST['email']);
-
             if(!$user) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
+            echo $user->getPassword().'\n';
+            echo $_POST['password'];
 
             if ($user->getPassword() !== $_POST['password']) {
                 return $this->render('login', ['message' => ['Wrong password']]);
