@@ -23,12 +23,22 @@ class UserMapper extends Database
             $stmt->execute();
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            echo $user['email'];
-
             return new User($user['name'], $user['surname'], $user['email'], $user['password']);
         }
         catch(PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            exit();
+        }
+    }
+
+    public function setUser(string $name, string $surname, string $email, string $password){
+        try {
+            $pdo = $this->connect();
+            $stmt = $pdo->prepare("INSERT INTO users (firstname, lastname, email, passsword) VALUES (?,?,?,?)");
+
+            $stmt->execute([$name, $surname, $email,$password]);
+        }
+        catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();
             exit();
         }

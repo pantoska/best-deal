@@ -3,7 +3,19 @@
 <?php include_once(dirname(__DIR__).'/head.html') ?>
 
 <body>
-<h1>HOMEPAGE</h1>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Best deal</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Zaloguj się</a></li>
+            <li><a href="#">Zarejestruj się</a></li>
+        </ul>
+    </div>
+</nav>
 
 <p>
     <?= $text ?>
