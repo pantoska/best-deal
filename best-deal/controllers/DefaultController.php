@@ -29,7 +29,10 @@ class DefaultController extends AppController
 
         if($this->isPost()){
             $sender->setUser($_POST['name'],$_POST['surname'],$_POST['email'],$_POST['password']);
+            echo "Zarejestrowano";
+            exit();
         }
+
 
     }
 

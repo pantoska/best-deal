@@ -34,8 +34,7 @@ class UserMapper extends Database
     public function setUser(string $name, string $surname, string $email, string $password){
         try {
             $pdo = $this->connect();
-            $stmt = $pdo->prepare("INSERT INTO users (firstname, lastname, email, passsword) VALUES (?,?,?,?)");
-
+            $stmt = $pdo->prepare("INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)");
             $stmt->execute([$name, $surname, $email,$password]);
         }
         catch (PDOException $e){
