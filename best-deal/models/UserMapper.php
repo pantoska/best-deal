@@ -10,14 +10,17 @@ require_once __DIR__.'/../Database.php';
 
 class UserMapper extends Database
 {
+    private $instance = null;
     public function __construct()
     {
         parent::__construct();
+        $this->instance = $this->getInstance();
+
     }
 
     public function getUser( string $email ): User {
         try {
-            $pdo = $this->connect();
+            $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
@@ -33,7 +36,7 @@ class UserMapper extends Database
 
     public function setUser(string $name, string $surname, string $email, string $password){
         try {
-            $pdo = $this->connect();
+            $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)");
             $stmt->execute([$name, $surname, $email,$password]);
         }
