@@ -11,6 +11,5 @@
         <img width="250" height="300" src="../../public/upload/<?= $images ?>">
 <?php endforeach; ?>
 
-
 </body>
 </html>
