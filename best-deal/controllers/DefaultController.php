@@ -27,13 +27,23 @@ class DefaultController extends AppController
         $this->render('register');
         $sender = new UserMapper();
 
-        if($this->isPost()){
+        if($this->isPost() && $this->confirmPass()){
             $sender->setUser($_POST['name'],$_POST['surname'],$_POST['email'],$_POST['password']);
             echo "Zarejestrowano";
             exit();
         }
+        else{
+            echo "Podaj poprawne dane";
+        }
+    }
 
-
+    private function confirmPass()
+    {
+        $pass = $_POST['password'];
+        $confirm =$_POST['password_confirmation'];
+        if($pass == $confirm)
+            return true;
+        return false;
     }
 
     public function login()
@@ -46,8 +56,6 @@ class DefaultController extends AppController
             if(!$user) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
-//            echo $user->getPassword().'\n';
-//            echo $_POST['password'];
 
             if ($user->getPassword() !== $_POST['password']) {
                 return $this->render('login', ['message' => ['Wrong password']]);

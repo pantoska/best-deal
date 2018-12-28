@@ -5,6 +5,9 @@
  * Date: 20.12.18
  * Time: 13:19
  */
+require_once("AppController.php");
+require_once(__DIR__.'/../models/Bargain.php');
+require_once(__DIR__.'/../models/BargainMapper.php');
 
 class BargainController extends AppController
 {
@@ -18,7 +21,9 @@ class BargainController extends AppController
 
     public function bargain()
     {
-        $this->render('bargain', [ 'img' => $this->getImages()]);
+        $this->render('bargain', [ 'files' => $this->getImages()]);
+        $this->render('bargain');
+
     }
 
     private function getNotHidden(array $files) {
@@ -32,9 +37,26 @@ class BargainController extends AppController
     }
     private function getImages(): array
     {
-        $files = scandir(dirname(__DIR__) .'/public/upload/');
+        $mapper = new BargainMapper();
+//        $files = scandir(dirname(__DIR__) .'/public/upload/');
+        $files = $mapper->getBargain();
 
         return $this->getNotHidden($files);
     }
+
+//    public function display(){
+//
+//        $mapper = new BargainMapper();
+//        $bargain = null;
+//
+//        if ($this->isPost()) {
+//            $bargain = $mapper->getBargain();
+//            if(!$bargain) {
+//                return $this->render('Cannot load bargains');
+//            }
+//
+//        }
+//        $this->render('bargain');
+//    }
 
 }
