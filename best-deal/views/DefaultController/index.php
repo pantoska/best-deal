@@ -13,6 +13,8 @@
             <li class="active"><a href="?page=index">Home</a></li>
             <li><a href="?page=login">Sign in</a></li>
             <li><a href="?page=register">Sign up</a></li>
+            <li><a href="?page=upload">Upload bargain</a></li>
+            <li><a href="?page=logout">Logout</a></li>
         </ul>
     </div>
 </nav>
