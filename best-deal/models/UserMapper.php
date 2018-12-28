@@ -39,6 +39,7 @@ class UserMapper extends Database
             $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)");
             $stmt->execute([$name, $surname, $email,$password]);
+            $stmt = $pdo->prepare("INSERT INTO bargain (title,price,image,description) VALUES ('lol','6','beka','chuj')");
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();
