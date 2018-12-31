@@ -28,12 +28,10 @@ class UploadController extends AppController
 
         if($this->isPost() && $this->validate($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name']))
         {
-            if(!empty($_FILES['file']['tmp_name'])
-                && file_exists($_FILES['file']['tmp_name'])) {
-                $f= addslashes(file_get_contents($_FILES['file']['tmp_name']));
-                $sender->setBargain($f,$_POST['title'],$_POST['price'],$_POST['description']);
+            if(!empty($_FILES['file']['tmp_name']) && file_exists($_FILES['file']['tmp_name'])) {
+                $sender->setBargain($_FILES['file']['name'],$_POST['title'],$_POST['price'],$_POST['description']);
             }
-            var_dump($_FILES['file']);
+//            var_dump($_FILES['file']);
             move_uploaded_file
             ($_FILES['file']['tmp_name'],
                 dirname(__DIR__).'/public/upload/'

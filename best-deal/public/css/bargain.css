@@ -1,0 +1,12 @@
+.comment-wrapper .panel-heading {
+    max-height:650px;
+    background-color: #f0ad4e;
+    overflow:auto;
+}
+
+.comment-wrapper .panel-body {
+    max-height:650px;
+    overflow:auto;
+}
+
+

@@ -9,26 +9,40 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="?page=index">Best deal</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="?page=index">Home</a></li>
-            <li><a href="?page=login">Sign in</a></li>
-            <li><a href="?page=register">Sign up</a></li>
-            <li><a href="?page=upload">Upload bargain</a></li>
-            <li><a href="?page=logout">Logout</a></li>
-        </ul>
+
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="?page=index">Home</a></li>
+                <li><a href="?page=upload">Upload bargain</a></li>
+            </ul>
+
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="?page=login">Sign in</a></li>
+                <li><a href="?page=register">Sign up</a></li>
+                <li><a href="?page=logout">Logout</a></li>
+            </ul>
+
+        </div>
     </div>
 </nav>
-
-<p>
-    <?= $text ?>
-</p>
-
 
 <?php
 if(isset($_SESSION) && !empty($_SESSION)) {
     print_r($_SESSION);
 }
 ?>
+
+<p>
+    <?= $text ?>
+</p>
+
 
 </body>
 

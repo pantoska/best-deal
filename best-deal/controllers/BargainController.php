@@ -21,42 +21,25 @@ class BargainController extends AppController
 
     public function bargain()
     {
-        $this->render('bargain', [ 'files' => $this->getImages()]);
-        $this->render('bargain');
-
+        $this->render('bargain', [ 'files' => $this->display()]);
     }
 
-    private function getNotHidden(array $files) {
-        foreach($files as $key=>$file) {
-            if ($file[0] === '.') {
-                unset($files[$key]);
-            };
-
-        }
-        return $files;
-    }
-    private function getImages(): array
+    public function display(): array
     {
+        $arr= array();
+
         $mapper = new BargainMapper();
-//        $files = scandir(dirname(__DIR__) .'/public/upload/');
-        $files = $mapper->getBargain();
+        $mapper->getLenght();
 
-        return $this->getNotHidden($files);
+
+        for($i =1; $i<=$mapper->getLenght(); $i++){
+            $arr[] = $mapper->getBargain($i);
+        }
+
+        var_dump($arr);
+
+        return $arr;
+
     }
-
-//    public function display(){
-//
-//        $mapper = new BargainMapper();
-//        $bargain = null;
-//
-//        if ($this->isPost()) {
-//            $bargain = $mapper->getBargain();
-//            if(!$bargain) {
-//                return $this->render('Cannot load bargains');
-//            }
-//
-//        }
-//        $this->render('bargain');
-//    }
 
 }

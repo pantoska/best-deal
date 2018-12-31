@@ -5,12 +5,6 @@
 
 <body>
 
-<?php if(isset($message)): ?>
-    <?php foreach($message as $item): ?>
-        <div><?= $item ?></div>
-    <?php endforeach; ?>
-<?php endif; ?>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -31,6 +25,13 @@
         <div class="main-div">
             <div class="panel">
                 <h2>Login</h2>
+
+                <?php if(isset($message)): ?>
+                    <?php foreach($message as $item): ?>
+                        <div><?= $item ?></div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
                 <p>Please enter your email and password</p>
             </div>
             <form id="Login" action="?page=login" method="POST">
@@ -53,6 +54,8 @@
             </form>
         </div>
     </div></div></div>
+
+
 
 
 </body>

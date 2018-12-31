@@ -1,11 +1,11 @@
 body{
-    background-color: #525252;
+    background-color: orange;
 }
 .centered-form{
     margin-top: 60px;
 }
 
 .centered-form .panel{
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+    background: rgba(255,165,0, 0.8);
+    box-shadow: rgba(255,165,0 0.3) 20px 20px 20px;
 }
