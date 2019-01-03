@@ -49,6 +49,12 @@
 
                 <div class="form-group">
 
+                    <input name="username" type="username" class="form-control" id="inputUsername" placeholder="username" required/>
+
+                </div>
+
+                <div class="form-group">
+
                     <input name="email" type="email" class="form-control" id="inputEmail" placeholder="email" required/>
 
                 </div>

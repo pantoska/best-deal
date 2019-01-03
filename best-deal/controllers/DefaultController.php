@@ -9,6 +9,10 @@ require_once("AppController.php");
 require_once(__DIR__.'/../models/User.php');
 require_once __DIR__.'/../models/UserMapper.php';
 
+require_once(__DIR__.'/../models/Bargain.php');
+require_once(__DIR__.'/../models/BargainMapper.php');
+
+
 class DefaultController extends AppController
 {
     public function __construct()
@@ -18,9 +22,7 @@ class DefaultController extends AppController
 
     public function index()
     {
-        $text = 'Hello there 👋';
-
-        $this->render('index', ['text' => $text]);
+        $this->render('index', [ 'files' => $this->display()]);
     }
 
     public function register(){
@@ -28,7 +30,7 @@ class DefaultController extends AppController
         $sender = new UserMapper();
 
         if($this->isPost() && $this->confirmPass()){
-            $sender->setUser($_POST['name'],$_POST['surname'],$_POST['email'],$_POST['password']);
+            $sender->setUser($_POST['name'],$_POST['surname'],$_POST['username'],$_POST['email'],md5($_POST['password']));
             echo "Zarejestrowano";
             exit();
         }
@@ -52,12 +54,12 @@ class DefaultController extends AppController
         $user = null;
 
         if ($this->isPost()) {
-            $user = $mapper->getUser($_POST['email']);
-            if(!$user) {
+            if(!$mapper->getUser($_POST['email'])) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
-
-            if ($user->getPassword() !== $_POST['password']) {
+            $user = $mapper->getUser($_POST['email']);
+            var_dump($user);
+            if ($user->getPassword() !== md5($_POST['password'])) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
                 $_SESSION["id"] = $user->getEmail();
@@ -77,5 +79,22 @@ class DefaultController extends AppController
         session_destroy();
 
         $this->render('index', ['text' => 'You have been successfully logged out!']);
+    }
+
+    public function display(): array
+    {
+        $arr= array();
+
+        $mapper = new BargainMapper();
+        $mapper->getLenght();
+
+
+        for($i =1; $i<=$mapper->getLenght(); $i++){
+            $arr[] = $mapper->getBargains($i);
+        }
+
+//        var_dump($arr);
+
+        return $arr;
     }
 }

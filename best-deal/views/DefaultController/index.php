@@ -43,6 +43,28 @@ if(isset($_SESSION) && !empty($_SESSION)) {
     <?= $text ?>
 </p>
 
+<div class="row">
+    <div class="col-md-12">
+
+        <div id="mdb-lightbox-ui"></div>
+
+        <div class="mdb-lightbox no-margin">
+
+            <?php foreach($files as $file): ?>
+                <figure class="col-md-4">
+                    <a class="black-text" href="?page=bargain">
+                        <img src="../../public/upload/<?php echo $file['image']; ?>" height="250" width="250" />
+                        <h2 class="text-left my-3"><?php echo $file['title']; ?></h2>
+                        <h3 class="text-left my-3"><?php echo $file['price']; ?></h3>
+                        <h3 class="text-left my-3"><?php echo $file['description']; ?></h3>
+
+                    </a>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
 
 </body>
 

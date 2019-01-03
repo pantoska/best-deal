@@ -26,15 +26,16 @@
         <div id="mdb-lightbox-ui"></div>
 
         <div class="mdb-lightbox no-margin">
-            
-            <?php foreach($files as $file): ?>
+
                 <figure class="col-md-4">
                     <a class="black-text" href="">
-                        <img src="../../public/upload/<?php echo $file['image']; ?>" height="250" width="250"  alt=<?php echo $file['title']; ?> />
-                        <h3 class="text-left my-3">Photo title</h3>
+                        <img src="../../public/upload/<?php echo $files['image']; ?>" height="250" width="250" />
+                        <h2 class="text-center my-3"><?php echo $files['title']; ?></h2>
+                        <h3 class="text-left my-3"><?php echo $files['price']; ?></h3>
+                        <h3 class="text-left my-3"><?php echo $files['description']; ?></h3>
+
                     </a>
                 </figure>
-            <?php endforeach; ?>
         </div>
     </div>
 </div>
@@ -55,41 +56,45 @@
                     <div class="clearfix"></div>
                     <hr>
                     <ul class="media-list">
-                        <li class="media">
-                            <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-muted">30 min ago</small>
-                                </span>
-                                <strong class="text-success">@MartinoMont</strong>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-muted">30 min ago</small>
-                                </span>
-                                <strong class="text-success">@LaurenceCorreil</strong>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="media">
-                            <div class="media-body">
-                                <span class="text-muted pull-right">
-                                    <small class="text-muted">30 min ago</small>
-                                </span>
-                                <strong class="text-success">@JohnNida</strong>
-                                <p>
-                                    Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                </p>
-                            </div>
-                        </li>
+                        <?php foreach($comments as $comment): ?>
+
+                            <li class="media">
+                                <div class="media-body">
+                                    <span class="text-muted pull-right">
+                                        <small class="text-muted"><?php echo $comment['time']; ?></small>
+                                    </span>
+                                    <strong class="text-success"><?php echo $comment['username']; ?></strong>
+                                    <p>
+                                        <?php echo $comment['content']; ?>
+                                    </p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+
+
+<!--                        <li class="media">-->
+<!--                            <div class="media-body">-->
+<!--                                <span class="text-muted pull-right">-->
+<!--                                    <small class="text-muted">30 min ago</small>-->
+<!--                                </span>-->
+<!--                                <strong class="text-success">@LaurenceCorreil</strong>-->
+<!--                                <p>-->
+<!--                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
+<!--                                    Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </li>-->
+<!--                        <li class="media">-->
+<!--                            <div class="media-body">-->
+<!--                                <span class="text-muted pull-right">-->
+<!--                                    <small class="text-muted">30 min ago</small>-->
+<!--                                </span>-->
+<!--                                <strong class="text-success">@JohnNida</strong>-->
+<!--                                <p>-->
+<!--                                    Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </div>

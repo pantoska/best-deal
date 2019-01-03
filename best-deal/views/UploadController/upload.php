@@ -58,7 +58,6 @@
                 <div class="form-group">
 
                     <input name="description" type="text" class="form-control" id="inputDescription" placeholder="description" required/>
-
                 </div>
 
                 <button type="submit" name="submit" value="send" class="btn btn-primary">Submit</button>

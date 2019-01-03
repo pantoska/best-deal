@@ -9,6 +9,9 @@ require_once("AppController.php");
 require_once(__DIR__.'/../models/Bargain.php');
 require_once(__DIR__.'/../models/BargainMapper.php');
 
+require_once(__DIR__.'/../models/Comment.php');
+require_once(__DIR__.'/../models/CommentMapper.php');
+
 class BargainController extends AppController
 {
     /**
@@ -21,7 +24,7 @@ class BargainController extends AppController
 
     public function bargain()
     {
-        $this->render('bargain', [ 'files' => $this->display()]);
+        $this->render('bargain', [ 'files' => $this->displayOne(1)],[ 'comments' => $this->displayComments()]);
     }
 
     public function display(): array
@@ -33,13 +36,35 @@ class BargainController extends AppController
 
 
         for($i =1; $i<=$mapper->getLenght(); $i++){
-            $arr[] = $mapper->getBargain($i);
+            $arr[] = $mapper->getBargains($i);
         }
 
-        var_dump($arr);
 
         return $arr;
 
+    }
+
+    public function displayComments():array
+    {
+        $arr= array();
+
+        $mapper = new CommentMapper();
+        $mapper->getLenght();
+
+
+        for($i =1; $i<=$mapper->getLenght(); $i++){
+            $arr[] = $mapper->getComment($i);
+        }
+
+
+        return $arr;
+
+    }
+
+    public function displayOne(int $id)
+    {
+        $mapper = new BargainMapper();
+        return $mapper->getBargains($id);
     }
 
 }

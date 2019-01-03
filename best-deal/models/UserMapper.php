@@ -18,7 +18,8 @@ class UserMapper extends Database
 
     }
 
-    public function getUser( string $email ): User {
+    public function getUser( string $email )
+    {
         try {
             $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
@@ -26,7 +27,11 @@ class UserMapper extends Database
             $stmt->execute();
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            return new User($user['name'], $user['surname'], $user['email'], $user['password']);
+
+            if(!$user['email'])
+                return null;
+
+            return new User($user['name'], $user['surname'], $user['username'], $user['email'], $user['password']);
         }
         catch(PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -34,12 +39,11 @@ class UserMapper extends Database
         }
     }
 
-    public function setUser(string $name, string $surname, string $email, string $password){
+    public function setUser(string $name, string $surname, string $username, string $email, string $password){
         try {
             $pdo = $this->instance->getConnection();
-            $stmt = $pdo->prepare("INSERT INTO users (name, surname, email, password) VALUES (?,?,?,?)");
-            $stmt->execute([$name, $surname, $email,$password]);
-            $stmt = $pdo->prepare("INSERT INTO bargain (title,price,image,description) VALUES ('lol','6','beka','chuj')");
+            $stmt = $pdo->prepare("INSERT INTO users (name, surname, username, email, password, role) VALUES (?,?,?,?,?,?)");
+            $stmt->execute([$name, $surname, $username, $email,$password,'user']);
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();
