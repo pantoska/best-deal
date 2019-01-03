@@ -18,6 +18,17 @@ class UserMapper extends Database
 
     }
 
+    public function getId(string $email){
+        $pdo = $this->instance->getConnection();
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user['id'];
+
+    }
+
     public function getUser( string $email )
     {
         try {

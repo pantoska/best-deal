@@ -19,7 +19,9 @@ class BargainMapper extends Database
     public function getBargains(int $id): array {
         try {
             $pdo = $this->instance->getConnection();
-            $stmt = $pdo->prepare("SELECT * FROM bargains WHERE id = :id");
+//            $stmt = $pdo->prepare("SELECT * FROM bargains WHERE id = :id");
+            $stmt = $pdo->prepare("SELECT bargains.id, bargains.title, bargains.price, bargains.image, bargains.description, users.username
+                                  FROM bargains, users where bargains.id_user=users.id and bargains.id=:id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
@@ -46,11 +48,11 @@ class BargainMapper extends Database
         return $stmt->rowCount();
     }
 
-    public function setBargain(string $image,string $title, string $price, string $description){
+    public function setBargain(string $image,string $title, string $price, string $description, int $id_user){
         try {
             $pdo = $this->instance->getConnection();
-            $stmt = $pdo->prepare("INSERT into bargains (title, price, image, description) VALUES (?,?,?,?)");
-            $stmt->execute([$title, $price, $image, $description]);
+            $stmt = $pdo->prepare("INSERT into bargains (title, price, image, description, id_user) VALUES (?,?,?,?,?)");
+            $stmt->execute([$title, $price, $image, $description, $id_user]);
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();

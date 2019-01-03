@@ -26,10 +26,10 @@ class UploadController extends AppController
     {
         $sender = new BargainMapper();
 
-        if($this->isPost() && $this->validate($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name']))
+        if($this->isPost() && $this->validate($_FILES['file']) && is_uploaded_file($_FILES['file']['tmp_name']) && isset($_SESSION))
         {
             if(!empty($_FILES['file']['tmp_name']) && file_exists($_FILES['file']['tmp_name'])) {
-                $sender->setBargain($_FILES['file']['name'],$_POST['title'],$_POST['price'],$_POST['description']);
+                $sender->setBargain($_FILES['file']['name'],$_POST['title'],$_POST['price'],$_POST['description'],$_SESSION['id']);
             }
 //            var_dump($_FILES['file']);
             move_uploaded_file

@@ -25,8 +25,9 @@ class CommentMapper extends Database
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
+//            echo $stmt->rowCount();
             if($stmt->rowCount()) {
-                $comment = $stmt->fetch(PDO::FETCH_ASSOC);
+                $comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 return $comment;
             }
         }
@@ -46,12 +47,12 @@ class CommentMapper extends Database
         return $stmt->rowCount();
     }
 
-    public function setComment(string $time, string $content)
+    public function setComment(string $time, string $content, int $id_bargain, int $id_comment_person)
     {
         try {
             $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("INSERT into comments (content, time, id_bargain, id_comment_person) VALUES (?,?,?,?)");
-            $stmt->execute([$content, $time]);
+            $stmt->execute([$content, $time,$id_bargain,$id_comment_person]);
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();

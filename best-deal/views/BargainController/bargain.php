@@ -33,6 +33,7 @@
                         <h2 class="text-center my-3"><?php echo $files['title']; ?></h2>
                         <h3 class="text-left my-3"><?php echo $files['price']; ?></h3>
                         <h3 class="text-left my-3"><?php echo $files['description']; ?></h3>
+                        <h3 class="text-left my-3"><?php echo $files['username']; ?></h3>
 
                     </a>
                 </figure>
@@ -49,53 +50,35 @@
                 <div class="panel-heading">
                     Comment panel
                 </div>
-                <div class="panel-body">
-                    <textarea class="form-control" placeholder="write a comment..." rows="3"></textarea>
-                    <br>
-                    <button type="button" class="btn btn-warning pull-right">Post</button>
-                    <div class="clearfix"></div>
-                    <hr>
-                    <ul class="media-list">
-                        <?php foreach($comments as $comment): ?>
+                    <form id="Bargain" action="?page=bargain" method="POST">
 
-                            <li class="media">
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted"><?php echo $comment['time']; ?></small>
-                                    </span>
-                                    <strong class="text-success"><?php echo $comment['username']; ?></strong>
-                                    <p>
-                                        <?php echo $comment['content']; ?>
-                                    </p>
-                                </div>
-                            </li>
-                        <?php endforeach; ?>
+                    <div class="panel-body">
+                        <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-warning pull-right">Post</button>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <ul class="media-list">
+<!--                            --><?php //foreach($comments as $comment): ?>
+                            <?php foreach($comments as $key => $comment1): ?>
+                                <?php foreach($comment1 as $row => $comment): ?>
 
+                                    <li class="media">
+                                        <div class="media-body">
+                                            <span class="text-muted pull-right">
+                                                <small class="text-muted"><?php echo $comment['time']; ?></small>
+                                            </span>
+                                            <strong class="text-success"><?php echo $comment['username']; ?></strong>
+                                            <p>
+                                                <?php echo $comment['content']; ?>
+                                            </p>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
 
-<!--                        <li class="media">-->
-<!--                            <div class="media-body">-->
-<!--                                <span class="text-muted pull-right">-->
-<!--                                    <small class="text-muted">30 min ago</small>-->
-<!--                                </span>-->
-<!--                                <strong class="text-success">@LaurenceCorreil</strong>-->
-<!--                                <p>-->
-<!--                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.-->
-<!--                                    Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                        <li class="media">-->
-<!--                            <div class="media-body">-->
-<!--                                <span class="text-muted pull-right">-->
-<!--                                    <small class="text-muted">30 min ago</small>-->
-<!--                                </span>-->
-<!--                                <strong class="text-success">@JohnNida</strong>-->
-<!--                                <p>-->
-<!--                                    Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.-->
-<!--                                </p>-->
-<!--                            </div>-->
-<!--                        </li>-->
-                    </ul>
+                        </ul>
+                    </form>
                 </div>
             </div>
         </div>

@@ -39,10 +39,6 @@ if(isset($_SESSION) && !empty($_SESSION)) {
 }
 ?>
 
-<p>
-    <?= $text ?>
-</p>
-
 <div class="row">
     <div class="col-md-12">
 
