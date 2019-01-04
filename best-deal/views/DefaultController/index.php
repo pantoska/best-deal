@@ -48,7 +48,7 @@ if(isset($_SESSION) && !empty($_SESSION)) {
 
             <?php foreach($files as $file): ?>
                 <figure class="col-md-4">
-                    <a class="black-text" href="?page=bargain">
+                    <a class="black-text" href="?page=bargain&id=<?php echo $file['id']; ?>">
                         <img src="../../public/upload/<?php echo $file['image']; ?>" height="250" width="250" />
                         <h2 class="text-left my-3"><?php echo $file['title']; ?></h2>
                         <h3 class="text-left my-3"><?php echo $file['price']; ?></h3>

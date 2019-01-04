@@ -38,6 +38,9 @@ class UploadController extends AppController
                 .$_FILES['file']['name']);
             exit();
         }
+        else{
+            echo 'Cos poszlo nie tak';
+        }
         $this->render('upload');
     }
 

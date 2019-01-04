@@ -30,31 +30,34 @@ class BargainController extends AppController
             date_default_timezone_set('Europe/Warsaw');
             $date = date('Y-m-d H:i:s');
 
-            $mapper->setComment($date,$_POST['comment'],$this->displayOne(1)['id'],$_SESSION['id']);
+            echo $_GET['id'];
+            echo '!!!!!!!!!!!!!!!!!!!!!!';
+
+            $mapper->setComment($date,$_POST['comment'],$this->displayOne($_GET['id'])['id'],$_SESSION['id']);
 
         }
 
 
-        $this->render('bargain', [ 'files' => $this->displayOne(1)],[ 'comments' => $this->displayComments()]);
+        $this->render('bargain', [ 'files' => $this->displayOne($_GET['id'])],[ 'comments' => $this->displayComments()]);
 
     }
 
-    public function display(): array
-    {
-        $arr= array();
-
-        $mapper = new BargainMapper();
-        $mapper->getLenght();
-
-
-        for($i =1; $i<=$mapper->getLenght(); $i++){
-            $arr[] = $mapper->getBargains($i);
-        }
-
-
-        return $arr;
-
-    }
+//    public function display(): array
+//    {
+//        $arr= array();
+//
+//        $mapper = new BargainMapper();
+//        $mapper->getLenght();
+//
+//
+//        for($i =1; $i<=$mapper->getLenght(); $i++){
+//            $arr[] = $mapper->getBargains($i);
+//        }
+//
+//
+//        return $arr;
+//
+//    }
 
     public function displayComments():array
     {
@@ -63,8 +66,8 @@ class BargainController extends AppController
         $mapper = new CommentMapper();
         $mapper->getLenght();
 
-        $arr[] = $mapper->getComment(1);
-        
+        $arr[] = $mapper->getComment($_GET['id']);
+
         return $arr;
 
     }
