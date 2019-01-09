@@ -26,26 +26,28 @@ class DefaultController extends AppController
     }
 
     public function register(){
-        $this->render('register');
+
         $sender = new UserMapper();
 
-        if($this->isPost() && $this->confirmPass()){
+        if($this->isPost()){
+            
+            if($sender->getUser($_POST['email']) != null)
+                return $this->render('register', ['message' => ['Ten email jest zajęty']]);
+
+            if( $_POST['password'] != $_POST['password_confirmation'])
+                return $this->render('register', ['message' => ['Hasła się nie zgadzają']]);
+
+
+            if($sender->getUsername($_POST['username']))
+                return $this->render('register', ['message' => ['Username jest zajęty']]);
+
             $sender->setUser($_POST['name'],$_POST['surname'],$_POST['username'],$_POST['email'],md5($_POST['password']));
             echo "Zarejestrowano";
             exit();
         }
-        else{
-            echo "Podaj poprawne dane";
-        }
-    }
 
-    private function confirmPass()
-    {
-        $pass = $_POST['password'];
-        $confirm =$_POST['password_confirmation'];
-        if($pass == $confirm)
-            return true;
-        return false;
+        $this->render('register');
+
     }
 
     public function login()
@@ -63,7 +65,6 @@ class DefaultController extends AppController
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
                 $_SESSION["id"] = $mapper->getId($_POST['email']);
-//                echo $mapper->getId($_POST['email']);
                 $_SESSION["email"] = $user->getEmail();
                 $_SESSION["role"] = $user->getRole();
 
@@ -73,6 +74,7 @@ class DefaultController extends AppController
             }
         }
         $this->render('login');
+
     }
 
     public function logout()

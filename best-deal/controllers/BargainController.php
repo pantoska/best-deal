@@ -26,47 +26,29 @@ class BargainController extends AppController
     {
         $mapper = new CommentMapper();
 
-        if ($this->isPost() && isset($_SESSION)){
+        $id = $_GET['id'];
+        if ($this->isPost() && !isset($_SESSION)){
             date_default_timezone_set('Europe/Warsaw');
             $date = date('Y-m-d H:i:s');
 
-            echo $_GET['id'];
-            echo '!!!!!!!!!!!!!!!!!!!!!!';
 
-            $mapper->setComment($date,$_POST['comment'],$this->displayOne($_GET['id'])['id'],$_SESSION['id']);
+            $mapper->setComment($date,$_POST['comment'], $_GET['id'],$_SESSION['id']);
 
         }
 
-
-        $this->render('bargain', [ 'files' => $this->displayOne($_GET['id'])],[ 'comments' => $this->displayComments()]);
+        $this->render('bargain', [ 'files' => $this->displayOne($id), 'comments' => $this->displayComments($id)]);
 
     }
 
-//    public function display(): array
-//    {
-//        $arr= array();
-//
-//        $mapper = new BargainMapper();
-//        $mapper->getLenght();
-//
-//
-//        for($i =1; $i<=$mapper->getLenght(); $i++){
-//            $arr[] = $mapper->getBargains($i);
-//        }
-//
-//
-//        return $arr;
-//
-//    }
 
-    public function displayComments():array
+    public function displayComments($id):array
     {
         $arr= array();
 
         $mapper = new CommentMapper();
         $mapper->getLenght();
 
-        $arr[] = $mapper->getComment($_GET['id']);
+        $arr[] = $mapper->getComment($id);
 
         return $arr;
 

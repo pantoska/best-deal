@@ -5,12 +5,6 @@
 
 <body>
 
-<?php if(isset($message)): ?>
-    <?php foreach($message as $item): ?>
-        <div><?= $item ?></div>
-    <?php endforeach; ?>
-<?php endif; ?>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -34,6 +28,12 @@
                 <p>Please enter your data</p>
             </div>
             <form id="Register" action="?page=register" method="POST">
+
+                <?php if(isset($message)): ?>
+                    <?php foreach($message as $item): ?>
+                        <div><?= $item ?></div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
 
                 <div class="form-group">
 

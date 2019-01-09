@@ -14,14 +14,15 @@ class User
     private $username;
     private $email;
     private $password;
-    private $role = "user";
+    private $role;
 
-    public function __construct($name, $surname, $username, $email, $password){
+    public function __construct($name, $surname, $username, $email, $password, $role){
         $this->name = $name;
         $this->surname = $surname;
         $this->username = $username;
         $this->email = $email;
         $this->password = $password;
+        $this->role = $role;
     }
     /**
      * @return mixed

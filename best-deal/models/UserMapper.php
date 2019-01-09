@@ -39,10 +39,11 @@ class UserMapper extends Database
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
             if(!$user['email'])
                 return null;
 
-            return new User($user['name'], $user['surname'], $user['username'], $user['email'], $user['password']);
+            return new User($user['name'], $user['surname'], $user['username'], $user['email'], $user['password'], $user['role']);
         }
         catch(PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -60,5 +61,20 @@ class UserMapper extends Database
             echo 'Error: ' . $e->getMessage();
             exit();
         }
+    }
+
+    public function getUsername(string $username)
+    {
+        $pdo = $this->instance->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($user)
+            return true;
+
+        return false;
     }
 }

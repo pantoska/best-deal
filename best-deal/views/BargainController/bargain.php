@@ -28,7 +28,7 @@
         <div class="mdb-lightbox no-margin">
 
                 <figure class="col-md-4">
-                    <a class="black-text" href="">
+                    <a class="black-text" href="?page=bargain&id=<?php echo $files['id']; ?>">
                         <img src="../../public/upload/<?php echo $files['image']; ?>" height="250" width="250" />
                         <h2 class="text-center my-3"><?php echo $files['title']; ?></h2>
                         <h3 class="text-left my-3"><?php echo $files['price']; ?></h3>
@@ -50,7 +50,7 @@
                 <div class="panel-heading">
                     Comment panel
                 </div>
-                    <form id="Bargain" action="?page=bargain" method="POST">
+                    <form id="Bargain" action="?page=bargain&id=<?php echo $files['id']; ?>" method="POST">
 
                     <div class="panel-body">
                         <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
@@ -59,7 +59,6 @@
                         <div class="clearfix"></div>
                         <hr>
                         <ul class="media-list">
-<!--                            --><?php //foreach($comments as $comment): ?>
                             <?php foreach($comments as $key => $comment1): ?>
                                 <?php foreach($comment1 as $row => $comment): ?>
 
