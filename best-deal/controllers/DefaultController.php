@@ -30,7 +30,7 @@ class DefaultController extends AppController
         $sender = new UserMapper();
 
         if($this->isPost()){
-            
+
             if($sender->getUser($_POST['email']) != null)
                 return $this->render('register', ['message' => ['Ten email jest zajęty']]);
 
@@ -96,8 +96,6 @@ class DefaultController extends AppController
         for($i =1; $i<=$mapper->getLenght(); $i++){
             $arr[] = $mapper->getBargains($i);
         }
-
-//        var_dump($arr);
 
         return $arr;
     }

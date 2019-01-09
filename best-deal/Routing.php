@@ -9,6 +9,8 @@
 require_once('controllers/DefaultController.php');
 require_once('controllers/BargainController.php');
 require_once('controllers/UploadController.php');
+require_once('controllers/AdminController.php');
+
 
 
 
@@ -44,6 +46,10 @@ class Routing
             'upload' => [
                 'action' => 'upload',
                 'controller' => 'UploadController'
+            ],
+            'panel' => [
+                'action' => 'panel',
+                'controller' => 'AdminController'
             ]
         ];
     }

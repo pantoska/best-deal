@@ -27,7 +27,7 @@ class BargainController extends AppController
         $mapper = new CommentMapper();
 
         $id = $_GET['id'];
-        if ($this->isPost() && !isset($_SESSION)){
+        if ($this->isPost() && isset($_SESSION['id'])){
             date_default_timezone_set('Europe/Warsaw');
             $date = date('Y-m-d H:i:s');
 

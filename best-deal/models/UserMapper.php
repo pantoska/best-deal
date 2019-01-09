@@ -77,4 +77,25 @@ class UserMapper extends Database
 
         return false;
     }
+
+    public function getUsers(): array
+    {
+        $pdo = $this->instance->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE role = 'user'");
+        $stmt->execute();
+
+        if($stmt->rowCount()) {
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $users;
+        }
+        return null;
+    }
+
+    public function removeUser(int $id)
+    {
+        $pdo = $this->instance->getConnection();
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+    }
 }
