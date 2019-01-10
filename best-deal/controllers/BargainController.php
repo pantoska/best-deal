@@ -25,28 +25,55 @@ class BargainController extends AppController
     public function bargain()
     {
         $mapper = new CommentMapper();
-
         $id = $_GET['id'];
+
         if ($this->isPost() && isset($_SESSION['id'])){
+
             date_default_timezone_set('Europe/Warsaw');
             $date = date('Y-m-d H:i:s');
 
-
             $mapper->setComment($date,$_POST['comment'], $_GET['id'],$_SESSION['id']);
-
         }
 
         $this->render('bargain', [ 'files' => $this->displayOne($id), 'comments' => $this->displayComments($id)]);
 
     }
 
+    public function deleteBargain()
+    {
+        echo $_POST['id'];
+        if (!isset($_POST['id'])) {
+            http_response_code(404);
+            return;
+        }
 
-    public function displayComments($id):array
+        $bargain = new BargainMapper();
+        $bargain->removeBargain((int)$_POST['id']);
+
+        http_response_code(200);
+    }
+
+    public function deleteComment()
+    {
+        echo $_POST['id'];
+        if (!isset($_POST['id'])) {
+            http_response_code(404);
+            return;
+        }
+
+        $comment = new CommentMapper();
+        $comment->removeComment((int)$_POST['id']);
+
+        http_response_code(200);
+    }
+
+
+    public function displayComments($id)
     {
         $arr= array();
 
         $mapper = new CommentMapper();
-        $mapper->getLenght();
+//        $mapper->getLenght();
 
         $arr[] = $mapper->getComment($id);
 
@@ -57,7 +84,7 @@ class BargainController extends AppController
     public function displayOne(int $id)
     {
         $mapper = new BargainMapper();
-        return $mapper->getBargains($id);
+        return $mapper->getBargain($id);
     }
 
 }

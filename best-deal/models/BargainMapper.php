@@ -16,22 +16,30 @@ class BargainMapper extends Database
 
     }
 
-    public function getBargains(int $id): array {
+    public function getBargains() {
+            $pdo = $this->instance->getConnection();
+            $stmt = $pdo->prepare("SELECT bargains.id, bargains.title, bargains.price, bargains.image, bargains.description, users.username
+                                  FROM bargains, users where bargains.id_user=users.id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if($stmt->rowCount()) {
+                $bargain = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return $bargain;
+            }
+    }
+
+    public function getBargain(int $id)
+    {
         try {
             $pdo = $this->instance->getConnection();
-//            $stmt = $pdo->prepare("SELECT * FROM bargains WHERE id = :id");
             $stmt = $pdo->prepare("SELECT bargains.id, bargains.title, bargains.price, bargains.image, bargains.description, users.username
                                   FROM bargains, users where bargains.id_user=users.id and bargains.id=:id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
-            if($stmt->rowCount()) {
-                $bargain = $stmt->fetch(PDO::FETCH_ASSOC);
-//                var_dump($bargain);
-//                while ($bargain = $stmt->fetch(PDO::FETCH_ASSOC))
-//                return new Bargain($bargain['title'], $bargain['price'], $bargain['image'], $bargain['description']);
-                return $bargain;
-            }
+            $bargain = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $bargain;
         }
         catch(PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -39,14 +47,6 @@ class BargainMapper extends Database
         }
     }
 
-    public function getLenght()
-    {
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM bargains;");
-        $stmt->execute();
-
-        return $stmt->rowCount();
-    }
 
     public function setBargain(string $image,string $title, string $price, string $description, int $id_user){
         try {
@@ -58,5 +58,13 @@ class BargainMapper extends Database
             echo 'Error: ' . $e->getMessage();
             exit();
         }
+    }
+
+    public function removeBargain(int $id)
+    {
+        $pdo = $this->instance->getConnection();
+        $stmt = $pdo->prepare("DELETE FROM bargains WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
     }
 }

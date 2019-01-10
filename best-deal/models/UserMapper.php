@@ -81,21 +81,25 @@ class UserMapper extends Database
     public function getUsers(): array
     {
         $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE role = 'user'");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email != :email;");
+        $stmt->bindParam(':email', $_SESSION['email'], PDO::PARAM_STR);
         $stmt->execute();
 
-        if($stmt->rowCount()) {
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $users;
-        }
-        return null;
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $users;
+
     }
 
-    public function removeUser(int $id)
+    public function delete(int $id)
     {
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $pdo = $this->instance->getConnection();
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+        }
+        catch (PDOException $e) {
+            die();
+        }
     }
 }

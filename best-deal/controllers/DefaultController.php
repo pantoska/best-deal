@@ -60,7 +60,6 @@ class DefaultController extends AppController
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
             $user = $mapper->getUser($_POST['email']);
-            var_dump($user);
             if ($user->getPassword() !== md5($_POST['password'])) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
@@ -85,17 +84,13 @@ class DefaultController extends AppController
         $this->render('index', ['text' => 'You have been successfully logged out!']);
     }
 
-    public function display(): array
+    public function display()
     {
         $arr= array();
 
         $mapper = new BargainMapper();
-        $mapper->getLenght();
 
-
-        for($i =1; $i<=$mapper->getLenght(); $i++){
-            $arr[] = $mapper->getBargains($i);
-        }
+        $arr[] = $mapper->getBargains();
 
         return $arr;
     }

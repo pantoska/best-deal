@@ -12,8 +12,6 @@ require_once('controllers/UploadController.php');
 require_once('controllers/AdminController.php');
 
 
-
-
 class Routing
 {
     public $routes = [];
@@ -43,13 +41,29 @@ class Routing
                 'action' => 'bargain',
                 'controller' => 'BargainController'
             ],
+            'delete_bargain' => [
+                'action' => 'deleteBargain',
+                'controller' => 'BargainController'
+            ],
+            'delete_comment' => [
+                'action' => 'deleteComment',
+                'controller' => 'BargainController'
+            ],
             'upload' => [
                 'action' => 'upload',
                 'controller' => 'UploadController'
             ],
-            'panel' => [
-                'action' => 'panel',
-                'controller' => 'AdminController'
+            'admin' => [
+                'controller' => 'AdminController',
+                'action' => 'index'
+            ],
+            'admin_users' => [
+                'controller' => 'AdminController',
+                'action' => 'users'
+            ],
+            'admin_delete_user' => [
+                'controller' => 'AdminController',
+                'action' => 'userDelete'
             ]
         ];
     }

@@ -1,11 +1,106 @@
 body{
-    background-color: orange;
+background-color: orange;
 }
 .centered-form{
-    margin-top: 60px;
+margin-top: 60px;
 }
 
 .centered-form .panel{
-    background: rgba(255,165,0, 0.8);
-    box-shadow: rgba(255,165,0 0.3) 20px 20px 20px;
+background: rgba(255,165,0, 0.8);
+box-shadow: rgba(255,165,0 0.3) 20px 20px 20px;
 }
+
+/*body {*/
+    /*font-family: Verdana;*/
+    /*font-size: 10pt;*/
+    /*margin-top: 100px !important;*/
+/*}*/
+
+/*h1 {*/
+    /*color: darkblue;*/
+/*}*/
+
+/*body {*/
+    /*height:800px;*/
+    /*width: 100%;*/
+    /*padding-left:40px;*/
+    /*background-color: white;*/
+/*}*/
+
+/*.position > div {*/
+    /*width:150px;*/
+    /*border:1px solid black;*/
+    /*border-radius: 10px;*/
+    /*font:bold 22px/100px Arial,Sans-Serif;*/
+    /*color:black;*/
+    /*text-align:center;*/
+/*}*/
+
+/*#turquise{ background-color: lightseagreen;}*/
+
+/*#blue{ background-color: dodgerblue;}*/
+
+/*#violet{ background-color: mediumorchid;}*/
+
+/*#orange{ background-color: darkorange;}*/
+
+/*#red{ background-color: tomato;}*/
+
+/*#yellow{ background-color: orange;}*/
+
+/*.static {*/
+    /*position:static;*/
+/*}*/
+
+/*.relative {*/
+    /*position:relative;*/
+    /*top:50px;*/
+    /*left:50px;*/
+/*}*/
+
+/*.absolute {*/
+    /*position:absolute;*/
+    /*width: 100%;*/
+    /*top: 0;*/
+    /*left: 0;*/
+/*}*/
+
+/*.fixed {*/
+    /*position:fixed;*/
+    /*bottom:20px;*/
+    /*right:20px;*/
+/*}*/
+
+/*ul {*/
+    /*list-style-type: none;*/
+    /*width: 100%;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*overflow: hidden;*/
+    /*background-color: #333;*/
+/*}*/
+
+/*li {*/
+    /*float: left;*/
+/*}*/
+
+/*li a {*/
+    /*display: block;*/
+    /*color: white;*/
+    /*text-align: center;*/
+    /*padding: 14px 16px;*/
+    /*text-decoration: none;*/
+/*}*/
+
+/*li a:hover:not(.active) {*/
+    /*background-color: #111;*/
+/*}*/
+
+/*li a:hover {*/
+    /*text-decoration: none;*/
+    /*color: green;*/
+/*}*/
+
+/*.active {*/
+    /*background-color: #4CAF50;*/
+/*}*/

@@ -12,6 +12,10 @@
 
         <div id="mdb-lightbox-ui"></div>
 
+        <form id="Bargain">
+            <button onclick="deleteBargain(<?php echo $files['id']; ?>)" type="button" class="btn btn-warning pull-right">Delete bargain</button>
+        </form>
+
         <div class="mdb-lightbox no-margin">
 
                 <figure class="col-md-4">
@@ -42,17 +46,18 @@
                     <div class="panel-body">
                         <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
                         <br>
-                        <button type="submit" class="btn btn-warning pull-right">Post</button>
+                        <button name='post' value="post" type="submit" class="btn btn-warning pull-right">Post</button>
                         <div class="clearfix"></div>
+                    </form>
                         <hr>
                         <ul class="media-list">
                             <?php foreach($comments as $key => $comment1): ?>
                                 <?php foreach($comment1 as $row => $comment): ?>
-
                                     <li class="media">
                                         <div class="media-body">
                                             <span class="text-muted pull-right">
                                                 <small class="text-muted"><?php echo $comment['time']; ?></small>
+                                                <button style="height:20px;width:20px" onclick="deleteComment(<?php echo $comment['id']; ?>)" type="button" class="btn btn-warning pull-right">X</button>
                                             </span>
                                             <strong class="text-success"><?php echo $comment['username']; ?></strong>
                                             <p>
@@ -64,7 +69,6 @@
                             <?php endforeach; ?>
 
                         </ul>
-                    </form>
                 </div>
             </div>
         </div>
