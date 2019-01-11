@@ -42,8 +42,9 @@ class DefaultController extends AppController
                 return $this->render('register', ['message' => ['Username jest zajęty']]);
 
             $sender->setUser($_POST['name'],$_POST['surname'],$_POST['username'],$_POST['email'],md5($_POST['password']));
-            echo "Zarejestrowano";
-            exit();
+
+            $url = "http://$_SERVER[HTTP_HOST]/";
+            header("Location: {$url}?page=index");
         }
 
         $this->render('register');
@@ -63,6 +64,7 @@ class DefaultController extends AppController
             if ($user->getPassword() !== md5($_POST['password'])) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
+
                 $_SESSION["id"] = $mapper->getId($_POST['email']);
                 $_SESSION["email"] = $user->getEmail();
                 $_SESSION["role"] = $user->getRole();
@@ -81,7 +83,28 @@ class DefaultController extends AppController
         session_unset();
         session_destroy();
 
-        $this->render('index', ['text' => 'You have been successfully logged out!']);
+        $url = "http://$_SERVER[HTTP_HOST]/";
+        header("Location: {$url}?page=index");
+
+    }
+
+    public function searcher()
+    {
+        $arr = array();
+        $mapper = new BargainMapper();
+
+        if ($this->isPost()) {
+
+            $arr[] = $mapper->getBargainName($_POST['text']);
+
+            if ($mapper->getBargainName($_POST['text']) != null) {
+                $this->render('searcher', [ 'files' => $arr]);
+            }
+            else {
+                echo "<script> alert('Not found any bargain with that pattern'); window.location.href='http://localhost:8080/?page=index'; </script>";
+            }
+        }
+
     }
 
     public function display()
@@ -93,5 +116,22 @@ class DefaultController extends AppController
         $arr[] = $mapper->getBargains();
 
         return $arr;
+    }
+
+    public function setRate(){
+
+        echo $_POST['id'];
+        echo $_POST['rate'];
+        if (!isset($_POST['id'])) {
+            http_response_code(404);
+            return;
+        }
+
+        $mapper = new BargainMapper();
+        $mapper->setRate((int)$_POST['id'], (int)$_POST['rate']);
+
+        http_response_code(200);
+
+
     }
 }

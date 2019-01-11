@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html>
-<?php include_once(dirname(__DIR__).'/head.html') ?>
+<?php include_once(dirname(__DIR__) . '/head.html') ?>
 
 <body>
 
 <?php include_once(dirname(__DIR__) . '/menubar.php') ?>
 
-
-
-<?php
-if(isset($_SESSION) && !empty($_SESSION)) {
-    print_r($_SESSION);
-}
-?>
-
-
-
 <div class="container mt40">
     <section class="row">
+
 
         <?php foreach($files as $key => $f): ?>
             <?php foreach($f as $row => $file): ?>
@@ -35,21 +26,13 @@ if(isset($_SESSION) && !empty($_SESSION)) {
                             <h4><a href="?page=bargain&id=<?php echo $file['id']; ?>" ><?php echo $file['title']; ?></a></h4>
 
 
-                            <?php if(isset($_SESSION) && !empty($_SESSION))
-                            {?>
+                            <span class="pull-right">
+                                <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-up"></i>
+                                <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-down"></i>
 
-                                <span class="pull-right">
+                                <p><?php echo $file['rate']; ?></p>
 
-                                    <div id="<?php echo $file['id']; ?>" class="like">
-                                        <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-up"></i>
-                                    </div>
-
-                                    <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-down"></i>
-
-                                    <p><?php echo $file['rate']; ?></p>
-
-                                </span>
-                            <?php }?>
+                            </span>
 
                         </div>
 
@@ -67,8 +50,7 @@ if(isset($_SESSION) && !empty($_SESSION)) {
     </section>
 </div>
 
+
 </body>
 
-
 </html>
-

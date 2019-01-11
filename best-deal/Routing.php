@@ -45,6 +45,10 @@ class Routing
                 'action' => 'deleteBargain',
                 'controller' => 'BargainController'
             ],
+            'set_rate' => [
+                'controller' => 'DefaultController',
+                'action' => 'setRate'
+            ],
             'delete_comment' => [
                 'action' => 'deleteComment',
                 'controller' => 'BargainController'
@@ -64,6 +68,10 @@ class Routing
             'admin_delete_user' => [
                 'controller' => 'AdminController',
                 'action' => 'userDelete'
+            ],
+            'searcher' => [
+                'controller' => 'DefaultController',
+                'action' => 'searcher'
             ]
         ];
     }

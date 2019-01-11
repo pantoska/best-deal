@@ -5,7 +5,7 @@
 
 <body>
 
-<?php include_once(dirname(__DIR__).'/menubar.html') ?>
+<?php include_once(dirname(__DIR__) . '/menubar.php') ?>
 
 
 <div class="container">
