@@ -72,7 +72,12 @@ class Routing
             'searcher' => [
                 'controller' => 'DefaultController',
                 'action' => 'searcher'
-            ]
+            ],
+            'rate' => [
+                'controller' => 'DefaultController',
+                'action' => 'getRate'
+            ],
+
         ];
     }
     public function run()

@@ -25,11 +25,8 @@ class CommentMapper extends Database
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
-//            echo $stmt->rowCount();
-//            if($stmt->rowCount()) {
                 $comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 return $comment;
-//            }
         }
         catch(PDOException $e) {
             echo 'Error: ' . $e->getMessage();

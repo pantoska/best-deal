@@ -14,11 +14,13 @@
             <div class="panel">
                 <h2>Upload bargain</h2>
                 <p>Please select image and describe the bargain</p>
+
                 <?php if(isset($message)): ?>
                     <?php foreach($message as $item): ?>
                         <div><?= $item ?></div>
                     <?php endforeach; ?>
                 <?php endif; ?>
+
             </div>
             <form id="Upload" action="?page=upload" method="POST" ENCTYPE="multipart/form-data">
 

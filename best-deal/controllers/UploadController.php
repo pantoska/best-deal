@@ -10,10 +10,12 @@ require_once("AppController.php");
 require_once(__DIR__.'/../models/Bargain.php');
 require_once(__DIR__.'/../models/BargainMapper.php');
 
+require_once(__DIR__.'/../models/RatesMapper.php');
+
 class UploadController extends AppController
 {
     const MAX_FILE_SIZE = 1024*1024;
-    const SUPPORTED_TYPES = ['image/jpg', 'image/png'];
+    const SUPPORTED_TYPES = ['image/jpg', 'image/png', 'image/jpeg'];
 
     private $message = [];
 
@@ -31,15 +33,16 @@ class UploadController extends AppController
             if(!empty($_FILES['file']['tmp_name']) && file_exists($_FILES['file']['tmp_name'])) {
                 $sender->setBargain($_FILES['file']['name'],$_POST['title'],$_POST['price'],$_POST['description'],$_SESSION['id']);
             }
-//            var_dump($_FILES['file']);
             move_uploaded_file
             ($_FILES['file']['tmp_name'],
                 dirname(__DIR__).'/public/upload/'
                 .$_FILES['file']['name']);
-            exit();
+
+            $url = "http://$_SERVER[HTTP_HOST]/";
+            header("Location: {$url}?page=index");
         }
 
-        $this->render('upload');
+        $this->render('upload', [ 'message' => $this->message]);
     }
 
     private function validate(array $file): bool

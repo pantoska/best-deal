@@ -26,13 +26,43 @@
                             <h4><a href="?page=bargain&id=<?php echo $file['id']; ?>" ><?php echo $file['title']; ?></a></h4>
 
 
-                            <span class="pull-right">
-                                <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-up"></i>
-                                <i id="<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-down"></i>
+                            <?php if(isset($_SESSION) && !empty($_SESSION))
+                            {?>
+                                <span class="pull-center">
 
-                                <p><?php echo $file['rate']; ?></p>
+                                    <?php  if ($rate[$key] >= 1) {?>
 
-                            </span>
+                                        <div class="likebutton<?php echo $file['id']; ?>">
+                                            <button id="like<?php echo $file['id']; ?> " class="glyphicon glyphicon-thumbs-up" disabled="disabled"></button>
+                                        </div>
+                                        <div class="dislikebutton<?php echo $file['id']; ?>" >
+                                            <button id="dislike<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-down"></button>
+                                        </div>
+
+                                    <?php } else if($rate[$key] <= -1) {?>
+
+                                        <div class="likebutton<?php echo $file['id']; ?>">
+                                            <button id="like<?php echo $file['id']; ?> " class="glyphicon glyphicon-thumbs-up"></button>
+                                        </div>
+                                        <div class="dislikebutton<?php echo $file['id']; ?>" >
+                                            <button id="dislike<?php echo $file['id']; ?> " class="glyphicon glyphicon-thumbs-down" disabled="disabled"></button>
+                                        </div>
+
+                                    <?php } else {?>
+                                        <div class="likebutton<?php echo $file['id']; ?>">
+                                            <button id="like<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-up"></button>
+                                        </div>
+                                        <div class="dislikebutton<?php echo $file['id']; ?>" >
+                                            <button id="dislike<?php echo $file['id']; ?>" class="glyphicon glyphicon-thumbs-down"></button>
+                                        </div>
+                                    <?php }?>
+
+                                    <h4 id="rate<?php echo $file['id']; ?>" ><?php echo $file['rates'] ?></h4>
+
+
+                                </span>
+
+                            <?php }?>
 
                         </div>
 
@@ -40,8 +70,6 @@
                         <h4 class="text-left my-3"><?php echo $file['description']; ?></h4>
 
                     </div>
-
-
                 </article>
 
             <?php endforeach; ?>

@@ -12,6 +12,8 @@ require_once __DIR__.'/../models/UserMapper.php';
 require_once(__DIR__.'/../models/Bargain.php');
 require_once(__DIR__.'/../models/BargainMapper.php');
 
+require_once(__DIR__.'/../models/RatesMapper.php');
+
 
 class DefaultController extends AppController
 {
@@ -22,7 +24,7 @@ class DefaultController extends AppController
 
     public function index()
     {
-        $this->render('index', [ 'files' => $this->display()]);
+        $this->render('index', [ 'files' => $this->display(), 'rate' => $this->getRate()]);
     }
 
     public function register(){
@@ -68,6 +70,7 @@ class DefaultController extends AppController
                 $_SESSION["id"] = $mapper->getId($_POST['email']);
                 $_SESSION["email"] = $user->getEmail();
                 $_SESSION["role"] = $user->getRole();
+                $_SESSION['username'] = $user->getUsername();
 
                 $url = "http://$_SERVER[HTTP_HOST]/";
                 header("Location: {$url}?page=index");
@@ -109,29 +112,78 @@ class DefaultController extends AppController
 
     public function display()
     {
-        $arr= array();
-
         $mapper = new BargainMapper();
 
-        $arr[] = $mapper->getBargains();
+        $bargains = $mapper->getBargains();
 
-        return $arr;
+//        print_r($bargains);
+
+        return $bargains;
     }
 
     public function setRate(){
 
-        echo $_POST['id'];
-        echo $_POST['rate'];
-        if (!isset($_POST['id'])) {
+        $status = null;
+        $mapper = new RatesMapper();
+
+
+
+//        echo (int)$_POST['rate'];
+//        echo (int)$_POST['id_bargain'];
+//        echo (int)$_POST['id_user'];
+
+        if (!isset($_POST['id_bargain']) || !isset($_POST['id_user']) || !isset($_POST['rate'])  ) {
             http_response_code(404);
             return;
         }
 
-        $mapper = new BargainMapper();
-        $mapper->setRate((int)$_POST['id'], (int)$_POST['rate']);
+        $arr = $mapper->getRate((int)$_POST['id_bargain'],(int)$_POST['id_user']);
+
+        if(!is_bool($arr)){
+            $status = false;
+        }
+        else
+            $status = true;
+
+        $mapper->setRate($status,(int)$_POST['rate'],(int)$_POST['id_bargain'],(int)$_POST['id_user']);
+        $response = $mapper->getSum((int)$_POST['id_bargain']);
+
+        echo $response;
+
+//        print_r('array'.$arr);
 
         http_response_code(200);
 
 
+
+    }
+
+    public function getRate()
+    {
+        $bmapper = new BargainMapper();
+        $rmapper = new RatesMapper();
+        $arr = array();
+
+        $bargains = $bmapper->getBargains();
+
+        if(isset($_SESSION) && !empty($_SESSION))
+        {
+            foreach ($bargains  as $key => $bargain){
+
+                $rate = $rmapper->getRate($bargain['id'], $_SESSION['id']);
+
+                if(is_bool($rate)){
+                    array_push($arr, 0);
+                }else
+                    array_push($arr, $rate);
+
+            }
+
+//            print_r($arr);
+
+//            return $arr;
+        }
+
+        return $arr;
     }
 }

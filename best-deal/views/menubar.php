@@ -23,7 +23,9 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
 
+
                 <ul class="nav navbar-nav navbar-right" id="right">
+                    <li><a>You are logged as:<?php echo $_SESSION['username']?></a></li>
                     <li><a class="logout" href="?page=logout">Logout</a></li>
                 </ul>
 

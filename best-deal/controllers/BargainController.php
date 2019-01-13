@@ -73,7 +73,6 @@ class BargainController extends AppController
         $arr= array();
 
         $mapper = new CommentMapper();
-//        $mapper->getLenght();
 
         $arr[] = $mapper->getComment($id);
 
