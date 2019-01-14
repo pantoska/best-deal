@@ -1,20 +1,4 @@
-/*.comment-wrapper .panel-heading {*/
-    /*max-height:250px;*/
-    /*background-color: #f0ad4e;*/
-    /*overflow:auto;*/
-/*}*/
-
-/*.comment-wrapper .panel-body {*/
-    /*!*max-height:250px;*!*/
-    /*overflow:auto;*/
-/*}*/
-
-/*.mt40 { margin-top: 40px; }*/
-
-/*.panel { position: relative; overflow: hidden; display: block; border-radius: 0 !important;  }*/
-/*.panel-default { border-color: #ebedef !important; }*/
 .panel .panel-body { position: relative; padding: 0 !important; overflow: hidden; height: auto; }
-/*.panel .panel-body a { overflow: hidden; }*/
 .panel .panel-body a img { display: block; margin: 0; width: 250px; height: 250px;
     transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -29,12 +13,20 @@
     -o-transition: opacity .25s ease-out;
 }
 
-/*.panel .panel-footer { padding: 8px !important; background-color: #f9f9f9 !important; border-bottom-right-radius: 0 !important; border-bottom-left-radius: 0 !important; }*/
-.panel .panel-footer h4 { display: inline; font: 400 normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #34495e; margin: 0 !important; padding: 0 !important; }
+.panel .panel-footer span { display: inline; font: 400 normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #34495e; margin: 9px 5px !important; float: left;}
+.panel .panel-footer span a { margin-top: 5px;}
 .panel .panel-footer button.glyphicon { display: inline; font-size: 1.125em; cursor: pointer; }
 .panel .panel-footer button.glyphicon-thumbs-up { color: #7ebca1; }
-.panel .panel-footer button.glyphicon-thumbs-down { color: #e77a77; padding-left: 5px; }
-.panel .panel-footer div { width: 15px; display: inline; font: 300 normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #34495e; text-align: center; background-color: transparent !important; border: none !important; }
-
-/*.modal-title { font: 400 normal 1.625em "Roboto",Arial,Verdana,sans-serif; }*/
-/*.modal-footer { font: 400 normal 1.125em "Roboto",Arial,Verdana,sans-serif; }*/
+.panel .panel-footer button.glyphicon-thumbs-down { color: #e77a77; padding-left: 5px;}
+.panel-footer {
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    position: relative !important;
+}
+.pull-right {
+    /*display: inline-block;*/
+    float: right !important;
+    margin: 2px 6px;
+}

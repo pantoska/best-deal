@@ -11,22 +11,27 @@ require_once __DIR__.'/../Database.php';
 class UserMapper extends Database
 {
     private $instance = null;
+
     public function __construct()
     {
-        parent::__construct();
-        $this->instance = $this->getInstance();
-
+        $this->instance = parent::getInstance();
     }
 
-    public function getId(string $email){
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->execute();
+    public function getId(string $email)
+    {
+        try {
+            $pdo = $this->instance->getConnection();
+            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $user['id'];
-
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $user['id'];
+        }
+        catch (PDOException $e){
+            echo 'Error: ' . $e->getMessage();
+            exit();
+        }
     }
 
     public function getUser( string $email )
@@ -39,7 +44,6 @@ class UserMapper extends Database
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
             if(!$user['email'])
                 return null;
 
@@ -51,7 +55,8 @@ class UserMapper extends Database
         }
     }
 
-    public function setUser(string $name, string $surname, string $username, string $email, string $password){
+    public function setUser(string $name, string $surname, string $username, string $email, string $password)
+    {
         try {
             $pdo = $this->instance->getConnection();
             $stmt = $pdo->prepare("INSERT INTO users (name, surname, username, email, password, role) VALUES (?,?,?,?,?,?)");
@@ -65,32 +70,42 @@ class UserMapper extends Database
 
     public function getUsername(string $username)
     {
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $pdo = $this->instance->getConnection();
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($user)
-            return true;
-
-        return false;
+            if ($user)
+                return true;
+            return false;
+        }
+        catch (PDOException $e){
+            echo 'Error: ' . $e->getMessage();
+            exit();
+        }
     }
 
-    public function getUsers(): array
+    public function getUsers()
     {
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email != :email;");
-        $stmt->bindParam(':email', $_SESSION['email'], PDO::PARAM_STR);
-        $stmt->execute();
+        try {
+            $pdo = $this->instance->getConnection();
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email != :email;");
+            $stmt->bindParam(':email', $_SESSION['email'], PDO::PARAM_STR);
+            $stmt->execute();
 
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $users;
-
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $users;
+        }
+        catch (PDOException $e){
+            echo 'Error: ' . $e->getMessage();
+            exit();
+        }
     }
 
-    public function delete(int $id)
+    public function deleteUser(int $id)
     {
         try {
             $pdo = $this->instance->getConnection();

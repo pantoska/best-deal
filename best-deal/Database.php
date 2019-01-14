@@ -18,7 +18,7 @@ class Database
     private $database;
 
 
-    public function __construct()
+    private function __construct()
     {
         $this->servername = SERVERNAME;
         $this->username = USERNAME;

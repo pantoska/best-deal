@@ -8,10 +8,8 @@
 require_once("AppController.php");
 require_once(__DIR__.'/../models/User.php');
 require_once __DIR__.'/../models/UserMapper.php';
-
 require_once(__DIR__.'/../models/Bargain.php');
 require_once(__DIR__.'/../models/BargainMapper.php');
-
 require_once(__DIR__.'/../models/RatesMapper.php');
 
 
@@ -24,49 +22,43 @@ class DefaultController extends AppController
 
     public function index()
     {
-        $this->render('index', [ 'files' => $this->display(), 'rate' => $this->getRate()]);
+        $this->render('index', ['files' => $this->getAllBargains(), 'rate' => $this->getRates()]);
     }
 
-    public function register(){
+    public function register()
+    {
+        $userMapper = new UserMapper();
 
-        $sender = new UserMapper();
+        if ($this->isPost()) {
 
-        if($this->isPost()){
+            if ($userMapper->getUser($_POST['email']) != null)
+                return $this->render('register', ['message' => ['This email is already registered']]);
+            if ($_POST['password'] != $_POST['password_confirmation'])
+                return $this->render('register', ['message' => ['Wrong password']]);
+            if ($userMapper->getUsername($_POST['username']))
+                return $this->render('register', ['message' => ['This username is already registered']]);
 
-            if($sender->getUser($_POST['email']) != null)
-                return $this->render('register', ['message' => ['Ten email jest zajęty']]);
-
-            if( $_POST['password'] != $_POST['password_confirmation'])
-                return $this->render('register', ['message' => ['Hasła się nie zgadzają']]);
-
-
-            if($sender->getUsername($_POST['username']))
-                return $this->render('register', ['message' => ['Username jest zajęty']]);
-
-            $sender->setUser($_POST['name'],$_POST['surname'],$_POST['username'],$_POST['email'],md5($_POST['password']));
+            $userMapper->setUser($_POST['name'], $_POST['surname'], $_POST['username'], $_POST['email'], md5($_POST['password']));
 
             $url = "http://$_SERVER[HTTP_HOST]/";
-            header("Location: {$url}?page=index");
+            echo "<script> alert('Zarejestrowano!'); window.location.href='{$url}?page=index'; </script>";
+            exit();
         }
-
         $this->render('register');
-
     }
 
     public function login()
     {
         $mapper = new UserMapper();
-        $user = null;
 
         if ($this->isPost()) {
-            if(!$mapper->getUser($_POST['email'])) {
+            if (!($user = $mapper->getUser($_POST['email']))) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
-            $user = $mapper->getUser($_POST['email']);
+
             if ($user->getPassword() !== md5($_POST['password'])) {
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
-
                 $_SESSION["id"] = $mapper->getId($_POST['email']);
                 $_SESSION["email"] = $user->getEmail();
                 $_SESSION["role"] = $user->getRole();
@@ -78,7 +70,6 @@ class DefaultController extends AppController
             }
         }
         $this->render('login');
-
     }
 
     public function logout()
@@ -88,102 +79,94 @@ class DefaultController extends AppController
 
         $url = "http://$_SERVER[HTTP_HOST]/";
         header("Location: {$url}?page=index");
-
     }
 
     public function searcher()
     {
-        $arr = array();
         $mapper = new BargainMapper();
 
         if ($this->isPost()) {
-
-            $arr[] = $mapper->getBargainName($_POST['text']);
-
-            if ($mapper->getBargainName($_POST['text']) != null) {
-                $this->render('searcher', [ 'files' => $arr]);
-            }
-            else {
-                echo "<script> alert('Not found any bargain with that pattern'); window.location.href='http://localhost:8080/?page=index'; </script>";
+            if ($mapper->getBargainByName($_POST['text']) != null) {
+                $this->render('searcher', ['files' => $mapper->getBargainByName($_POST['text'])]);
+            } else {
+                $url = "http://$_SERVER[HTTP_HOST]/";
+                echo "<script> alert('Not found any bargain with that pattern'); window.location.href='{$url}?page=index'; </script>";
             }
         }
-
     }
 
-    public function display()
+    public function getAllBargains()
     {
         $mapper = new BargainMapper();
-
-        $bargains = $mapper->getBargains();
-
-//        print_r($bargains);
-
-        return $bargains;
+        return $mapper->getBargains();;
     }
 
-    public function setRate(){
+    private function checkRate($arr)
+    {
+        if ($arr == 1) {
+            if ((int)$_POST['rate'] == -1)
+                $rate = -2;
+            else
+                $rate = -1;
+        } else if ($arr == -1) {
+            if ((int)$_POST['rate'] == 1)
+                $rate = 2;
+            else
+                $rate = 1;
+        } else
+            $rate = (int)$_POST['rate'];
 
+        return $rate;
+    }
+
+    public function setRate()
+    {
         $status = null;
         $mapper = new RatesMapper();
 
-
-
-//        echo (int)$_POST['rate'];
-//        echo (int)$_POST['id_bargain'];
-//        echo (int)$_POST['id_user'];
-
-        if (!isset($_POST['id_bargain']) || !isset($_POST['id_user']) || !isset($_POST['rate'])  ) {
+        if (!isset($_POST['id_bargain']) || !isset($_POST['id_user']) || !isset($_POST['rate']))
+        {
             http_response_code(404);
             return;
         }
 
-        $arr = $mapper->getRate((int)$_POST['id_bargain'],(int)$_POST['id_user']);
+        $currentRate = $mapper->getRate((int)$_POST['id_bargain'], (int)$_POST['id_user']);
 
-        if(!is_bool($arr)){
-            $status = false;
-        }
-        else
-            $status = true;
-
-        $mapper->setRate($status,(int)$_POST['rate'],(int)$_POST['id_bargain'],(int)$_POST['id_user']);
-        $response = $mapper->getSum((int)$_POST['id_bargain']);
-
-        echo $response;
-
-//        print_r('array'.$arr);
-
-        http_response_code(200);
-
-
-
-    }
-
-    public function getRate()
-    {
-        $bmapper = new BargainMapper();
-        $rmapper = new RatesMapper();
-        $arr = array();
-
-        $bargains = $bmapper->getBargains();
-
-        if(isset($_SESSION) && !empty($_SESSION))
+        if (is_bool($currentRate))
         {
-            foreach ($bargains  as $key => $bargain){
-
-                $rate = $rmapper->getRate($bargain['id'], $_SESSION['id']);
-
-                if(is_bool($rate)){
-                    array_push($arr, 0);
-                }else
-                    array_push($arr, $rate);
-
+            $new = true;
+            $rate = (int)$_POST['rate'];
+        }
+        else{
+                $new = false;
+                $rate = $this->checkRate($currentRate);
             }
 
-//            print_r($arr);
+        $mapper->setRate($new, $rate, (int)$_POST['id_bargain'], (int)$_POST['id_user']);
+        $response = $mapper->getRatesSum((int)$_POST['id_bargain']);
 
-//            return $arr;
+        echo $response;
+        http_response_code(200);
+    }
+
+    public function getRates()
+    {
+        $bargainMapper = new BargainMapper();
+        $ratesMapper = new RatesMapper();
+        $ratesArray = array();
+
+        $bargains = $bargainMapper->getBargains();
+
+        if (isset($_SESSION) && !empty($_SESSION)) {
+            foreach ($bargains as $key => $bargain) {
+                $rate = $ratesMapper->getRate($bargain['id'], $_SESSION['id']);
+
+                if (is_bool($rate))
+                    array_push($ratesArray, 0);
+                else
+                    array_push($ratesArray, $rate);
+            }
         }
-
-        return $arr;
+        return $ratesArray;
     }
 }

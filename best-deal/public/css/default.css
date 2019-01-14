@@ -1,0 +1,88 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: rgb(242, 242, 242) !important;
+}
+
+.row {
+    width: 100%;
+    margin: 0px 0px !important;
+}
+
+.col-md-6{
+    width: 100%;
+}
+
+.list{
+    padding-left: 20px;
+}
+
+.btn-warning{
+    margin-right: 20px;
+}
+
+.text-muted{
+    margin-right: 20px;
+}
+
+.describe{
+    text-align: center;
+    color: #34495e;
+}
+
+.comments{
+    margin-top: 20px !important;
+    position: relative;
+    margin: auto;
+    height: 100px;
+    width: 95%;
+}
+
+
+.panel-default{
+    background-color: #f0ad4e;
+}
+
+.offer{
+    margin-left: 35%;
+    float: initial;
+    width: 30%;
+    text-align: center;
+    font-size: smaller;
+    text-indent: 0;
+    border: thin silver solid;
+    padding: 0.5em;
+    background-color: white !important;
+}
+
+.list {
+    padding: 0px 20px!important;
+}
+
+.media {
+    border-top: 1px dashed darkgray !important;
+    padding: 10px 0px !important;
+}
+
+.media:first-child {
+    margin-top: 20px !important;
+}
+
+.form-control {
+    resize: none !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+}
+
+.navbar navbar-inverse {
+    position: fixed;
+}
+
+.panel-info{
+    position: relative !important;
+}
+
+.buttonpost{
+    margin-right: 20px !important;
+}

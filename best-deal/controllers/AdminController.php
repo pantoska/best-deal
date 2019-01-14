@@ -6,7 +6,6 @@
  * Time: 09:58
  */
 require_once 'AppController.php';
-
 require_once __DIR__.'/../models/User.php';
 require_once __DIR__.'/../models/UserMapper.php';
 
@@ -19,11 +18,14 @@ class AdminController extends AppController
 
     public function index(): void
     {
-        $user = new UserMapper();
-        $this->render('index', ['user' => $user->getUser($_SESSION['email'])]);
+        if($_SESSION['role'] == 'admin') {
+
+            $user = new UserMapper();
+            $this->render('index', ['user' => $user->getUser($_SESSION['email'])]);
+        }
     }
 
-    public function users(): void
+    public function getUsers(): void
     {
         $user = new UserMapper();
 
@@ -33,7 +35,7 @@ class AdminController extends AppController
         echo $user->getUsers() ? json_encode($user->getUsers()) : '';
     }
 
-    public function userDelete(): void
+    public function deleteUser(): void
     {
         if (!isset($_POST['id'])) {
             http_response_code(404);
@@ -41,7 +43,7 @@ class AdminController extends AppController
         }
 
         $user = new UserMapper();
-        $user->delete((int)$_POST['id']);
+        $user->deleteUser((int)$_POST['id']);
 
         http_response_code(200);
     }

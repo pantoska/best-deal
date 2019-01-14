@@ -11,11 +11,10 @@ class CommentMapper extends Database
     private $instance = null;
     public function __construct()
     {
-        parent::__construct();
-        $this->instance = $this->getInstance();
+        $this->instance = parent::getInstance();
     }
 
-    public function getComment(string $id): array
+    public function getComment(string $id)
     {
         try {
             $pdo = $this->instance->getConnection();
@@ -33,15 +32,6 @@ class CommentMapper extends Database
             exit();
         }
 
-    }
-
-    public function getLenght()
-    {
-        $pdo = $this->instance->getConnection();
-        $stmt = $pdo->prepare("SELECT * FROM comments, bargains WHERE comments.id_bargain=bargains.id AND bargains.id=1;");
-        $stmt->execute();
-
-        return $stmt->rowCount();
     }
 
     public function setComment(string $time, string $content, int $id_bargain, int $id_comment_person)

@@ -22,7 +22,7 @@ function getUsers() {
                     <td>${el.role}</td>   
                     <td>     
                     <button class="btn btn-danger" type="button" onclick="deleteUser(${el.id})">
-                        <i class="material-icons">delete_forever</i>
+                        <i class="material-icons">delete forever</i>
                     </button>
                     </td>  
                     </tr>`);

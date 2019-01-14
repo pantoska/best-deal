@@ -9,7 +9,6 @@
 require_once("AppController.php");
 require_once(__DIR__.'/../models/Bargain.php');
 require_once(__DIR__.'/../models/BargainMapper.php');
-
 require_once(__DIR__.'/../models/RatesMapper.php');
 
 class UploadController extends AppController
@@ -56,8 +55,6 @@ class UploadController extends AppController
             $this->message[] = 'File type is not supported.';
             return false;
         }
-
         return true;
     }
-
 }

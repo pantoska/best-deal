@@ -11,8 +11,7 @@ class RatesMapper extends Database
     private $instance = null;
     public function __construct()
     {
-        parent::__construct();
-        $this->instance = $this->getInstance();
+        $this->instance = parent::getInstance();
     }
 
     public function setRate(bool $check,int $rate, int $id_bargain, int $id_comment_person)
@@ -31,7 +30,6 @@ class RatesMapper extends Database
                 $stmt->bindParam(':rate', $rate, PDO::PARAM_INT);
                 $stmt->execute();
             }
-
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();
@@ -55,14 +53,11 @@ class RatesMapper extends Database
 
             $sum = $bargain->fetch(PDO::FETCH_ASSOC);
 
-
             if(is_bool($sum))
                 return true;
             else {
                 return $sum['rate'];
             }
-
-
         }
         catch (PDOException $e){
             echo 'Error: ' . $e->getMessage();
@@ -70,20 +65,22 @@ class RatesMapper extends Database
         }
     }
 
-    public function getSum(int $id_bargain)
+    public function getRatesSum(int $id_bargain)
     {
-        $pdo = $this->instance->getConnection();
-        $sum = $pdo->prepare("SELECT SUM(rates.rate) as rate 
+        try {
+            $pdo = $this->instance->getConnection();
+            $sum = $pdo->prepare("SELECT SUM(rates.rate) as rate 
                                         FROM bargains,rates WHERE rates.id_bargain = bargains.id 
                                         AND bargains.id =:id_bargain;");
-        $sum->bindParam(':id_bargain', $id_bargain, PDO::PARAM_INT);
-        $sum->execute();
-        $response = $sum->fetch(PDO::FETCH_ASSOC);
+            $sum->bindParam(':id_bargain', $id_bargain, PDO::PARAM_INT);
+            $sum->execute();
+            $response = $sum->fetch(PDO::FETCH_ASSOC);
 
-
-        return $response['rate'];
-
-
-
+            return $response['rate'];
+        }
+        catch (PDOException $e){
+            echo 'Error: ' . $e->getMessage();
+            exit();
+        }
     }
 }

@@ -1,6 +1,4 @@
-$(document).ready(function(){
-    $('.panel-header').html('SIGN IN');
-});
+$(document).ready(function(){});
 
 
 function deleteBargain(id) {
