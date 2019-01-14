@@ -8,10 +8,6 @@
 <?php include_once(dirname(__DIR__) . '/menubar.php') ?>
 
 <div class="row">
-    <div class="col-md-12">
-
-        <div id="mdb-lightbox-ui"></div>
-
         <?php if(isset($_SESSION) &&  $_SESSION['role'] == 'admin')
         {?>
             <form id="Bargain">
@@ -20,35 +16,31 @@
 
         <?php } ?>
 
-        <div class="mdb-lightbox no-margin">
+        <div>
 
-                <figure class="col-md-4">
+            <figure class="offer">
                     <a class="black-text" href="?page=bargain&id=<?php echo $files['id']; ?>">
                         <img src="../../public/upload/<?php echo $files['image']; ?>" height="250" width="250" />
-                        <h2 class="text-center my-3"><?php echo $files['title']; ?></h2>
-                        <h3 class="text-left my-3"><?php echo $files['price']; ?></h3>
-                        <h3 class="text-left my-3"><?php echo $files['description']; ?></h3>
-                        <h3 class="text-left my-3"><?php echo $files['username']; ?></h3>
-
+                        <h2 ><?php echo $files['title']; ?></h2>
+                        <h4 class="left"><?php echo $files['price']; ?></h4>
+                        <h3 class="left"><?php echo $files['description']; ?></h3>
+                        <h4 class="left"><?php echo $files['username']; ?></h4>
                     </a>
-                </figure>
+            </figure>
         </div>
     </div>
 </div>
 
 
 
-<div class="row bootstrap snippets">
-    <div class="col-md-6 col-md-offset-2 col-sm-12">
-        <div class="comment-wrapper">
+<div class="comments">
+    <div >
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    Comment panel
-                </div>
+                <div class="panel-heading">Comment panel</div>
 
                     <?php if(isset($_SESSION) && !empty($_SESSION))
                     {?>
-                        <form id="Bargain" action="?page=bargain&id=<?php echo $files['id']; ?>" method="POST">
+                        <form action="?page=bargain&id=<?php echo $files['id']; ?>" method="POST">
                         <div class="panel-body">
                             <textarea name="comment" class="form-control" placeholder="write a comment..." rows="3"></textarea>
                             <br>
@@ -59,20 +51,22 @@
                     <?php } ?>
 
                         <hr>
-                        <ul class="media-list">
+                        <ul class="list">
                             <?php foreach($comments as $key => $comment1): ?>
                                 <?php foreach($comment1 as $row => $comment): ?>
                                     <li class="media">
                                         <div class="media-body">
-                                            <span class="text-muted pull-right">
+                                            <span class="pull-right">
                                                 <small class="text-muted"><?php echo $comment['time']; ?></small>
 
                                             <?php if(isset($_SESSION) &&  $_SESSION['role'] == 'admin')
                                             {?>
                                                 <button style="height:20px;width:20px" onclick="deleteComment(<?php echo $comment['id']; ?>)" type="button" class="btn btn-warning pull-right">X</button>
+
                                             <?php } ?>
 
                                             </span>
+
                                             <strong class="text-success"><?php echo $comment['username']; ?></strong>
                                             <p>
                                                 <?php echo $comment['content']; ?>
@@ -85,8 +79,6 @@
                         </ul>
                 </div>
             </div>
-        </div>
-
     </div>
 </div>
 

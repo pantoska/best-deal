@@ -7,7 +7,6 @@ $(document).ready(function() {
 
         likeFunction(id, form, 1);
         $('#like' + id).attr("disabled", "disabled");
-        // $('#dislike'+ id).removeAttr("disabled");
         $('#dislike'+id).prop("disabled", false).removeAttr("disabled");
 
     });

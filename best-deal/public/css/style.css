@@ -8,11 +8,33 @@ background-color: orange;
     width: 100%;
 }
 
-.centered-form{
-margin-top: 60px;
+.col-md-6{
+    width: 100%;
 }
 
-.centered-form .panel{
-background: rgba(255,165,0, 0.8);
-box-shadow: rgba(255,165,0 0.3) 20px 20px 20px;
+.list{
+    padding-left: 20px;
+}
+
+
+.comments{
+    margin-top: 10px;
+    margin-left: 5px;
+    height: 100px;
+    width: 99%;
+}
+
+.offer{
+    /*align-items: normal;*/
+    /*display: block;*/
+    /*margin-left: 40%;*/
+    /*margin-right: auto;*/
+    margin-left: 35%;
+    float: initial;
+    width: 30%;
+    text-align: center;
+    font-size: smaller;
+    text-indent: 0;
+    border: thin silver solid;
+    padding: 0.5em;
 }
